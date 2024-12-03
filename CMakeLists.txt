@@ -3,12 +3,12 @@ project(MiniMetro)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(MiniMetro main.cpp
-        display.cpp
-        display.h
-        utils.cpp
-        utils.h
-        navigation.cpp
-        navigation.h
-        station.h
-        station.cpp)
+add_executable(MiniMetro src/main.cpp
+        src/display.cpp
+        src/display.h
+        src/utils.cpp
+        src/utils.h
+        src/navigation.cpp
+        src/navigation.h
+        src/station.h
+        src/station.cpp)
