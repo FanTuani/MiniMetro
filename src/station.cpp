@@ -1,4 +1,5 @@
 #include "station.h"
+#include "linkStation.h"
 
 Station::Station() {
     open = end = false;

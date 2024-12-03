@@ -6,6 +6,8 @@
 #include <set>
 #include <map>
 
+class LinkStation;
+
 using namespace std;
 
 class Station {
@@ -13,7 +15,7 @@ public:
     vector<int> lines;
     bool open, end;
     string name;
-    vector<pair<Station, int> > con;
+    vector<LinkStation> con;
 
     Station();
 

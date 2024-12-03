@@ -3,6 +3,7 @@
 #include <iostream>
 #include <queue>
 #include <algorithm>
+#include "linkStation.h"
 
 using namespace std;
 
@@ -28,8 +29,8 @@ void getLinesInfo() {
                 stations[name] = Station(line, name, end);
             }
             if (i != 1) {
-                stations[name].con.emplace_back(*last, w);
-                last->con.emplace_back(stations[name], w);
+                stations[name].con.emplace_back(stations[last->name], w, line);
+                last->con.emplace_back(stations[name], w, line);
             }
             if (i != n) {
                 ifs >> w;
@@ -52,8 +53,8 @@ void dfs(const string &now, const string &des, int time = 0) {
     if (now == des) {
         ans.emplace_back(route, time);
     } else {
-        for (const auto &[to, w]: stations[now].con) {
-            dfs(to.name, des, time + w);
+        for (const auto &to: stations[now].con) {
+            dfs(to.station.name, des, time + to.time);
         }
     }
     vis[now] = false;
@@ -75,11 +76,7 @@ void navigate(const string &st, const string &des) {
         auto &[rou, time] = ans[i - 1];
         cout << "route " << i << ", including " << rou.size() << " stations on this route, ";
         int hr = time / 60, mi = time % 60;
-        if (mi <= 40) {
-            mi *= 1.4;
-        } else if (mi < 50) {
-            mi *= 1.2;
-        }
+        mi = (int) (mi * (1.0 + (60.0 - mi) / 2.0 / 60.0));
         if (hr > 0) {
             cout << "arrive within " << hr << "h " << mi << "min:\n";
         } else {

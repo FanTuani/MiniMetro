@@ -4,6 +4,7 @@
 #include "display.h"
 #include "station.h"
 #include "navigation.h"
+#include "linkStation.h"
 
 void displayStationInfo();
 
@@ -61,7 +62,7 @@ void displayStationInfo() {
     }
     cout << "\nStation state: " << (station.open ? "opening" : "closing");
     cout << "\nConnected station" << (station.con.size() > 1 ? "s: " : ": ");
-    for (auto &[sta, w]: station.con) {
+    for (auto &[sta, w, l]: station.con) {
         cout << sta.name;
         for (int line: sta.lines) {
             cout << '[' << line << "]";
