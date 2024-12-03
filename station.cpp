@@ -1,11 +1,11 @@
 #include "station.h"
 
 Station::Station() {
-    open = false;
+    open = end = false;
     name = "";
 }
 
-Station::Station(int line, string &name, bool open) : open(open), name(name) {
+Station::Station(int line, string &name, bool end, bool open) : end(end), open(open), name(name) {
     lines.push_back(line);
 }
 

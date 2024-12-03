@@ -11,13 +11,13 @@ using namespace std;
 class Station {
 public:
     vector<int> lines;
-    bool open;
+    bool open, end;
     string name;
     vector<pair<Station, int> > con;
 
     Station();
 
-    Station(int line, string &name, bool open = true);
+    Station(int line, string &name, bool end = false, bool open = true);
 
     bool operator<(const Station &oth) const;
 };

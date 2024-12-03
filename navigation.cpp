@@ -21,10 +21,11 @@ void getLinesInfo() {
         for (int i = 1; i <= n; i++) {
             string name;
             ifs >> name;
+            bool end = i == 1 or i == n;
             if (stations.find(name) != stations.end()) {
                 stations[name].lines.push_back(line);
             } else {
-                stations[name] = Station(line, name);
+                stations[name] = Station(line, name, end);
             }
             if (i != 1) {
                 stations[name].con.emplace_back(*last, w);

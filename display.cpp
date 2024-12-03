@@ -65,10 +65,14 @@ void showLines() {
     while (ifs >> line) {
         cout << "Line " << line << ": ";
         ifs >> n;
-        while (n--) {
+        for (int i = 1; i <= n; i++) {
             string name;
             ifs >> name;
             cout << name << ' ';
+            if (i != n) {
+                int w;
+                ifs >> w;
+            }
         }
         cout << "\n\n";
     }
