@@ -13,7 +13,7 @@ public:
     vector<int> lines;
     bool open;
     string name;
-    vector<Station> con;
+    vector<pair<Station, int> > con;
 
     Station();
 
