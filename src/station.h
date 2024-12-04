@@ -22,6 +22,10 @@ public:
     Station(int line, string &name, bool end = false, bool open = true);
 
     bool operator<(const Station &oth) const;
+
+    [[nodiscard]] int getTimeNearBy(const Station &to) const;
+
+    [[nodiscard]] int getTimeNearBy(const string &staName) const;
 };
 
 extern map<string, Station> stations;

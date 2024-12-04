@@ -41,40 +41,54 @@ void getLinesInfo() {
 }
 
 map<string, bool> vis;
-vector<string> route;
-vector<pair<vector<string>, int> > ans;
+vector<pair<string, int> > route;
+vector<vector<pair<string, int> > > ans;
 
 void dfs(const string &now, const string &des, int time = 0) {
-    if (vis.find(now) != vis.end() and vis[now]) {
-        return;
-    }
     vis[now] = true;
-    route.push_back(now);
     if (now == des) {
-        ans.emplace_back(route, time);
+        ans.emplace_back(route);
     } else {
         for (const auto &to: stations[now].con) {
+            if (vis.find(to.station.name) != vis.end() and vis[to.station.name]) {
+                continue;
+            }
+            route.emplace_back(to.station.name, to.line);
+            vis[to.station.name] = true;
             dfs(to.station.name, des, time + to.time);
+            vis[to.station.name] = false;
+            route.pop_back();
         }
     }
-    vis[now] = false;
-    route.pop_back();
+
 }
 
-bool cmp(const pair<vector<string>, int> &a, const pair<vector<string>, int> &b) {
-    return a.second < b.second;
+int calculateRouteTime(const vector<pair<string, int> > &rou) {
+    int res = 0;
+    for (int i = 0; i < rou.size() - 1; i++) {
+        auto &[name, line] = rou[i];
+        res += stations[name].getTimeNearBy(rou[i + 1].first);
+    }
+    return res;
+}
+
+bool cmp(const vector<pair<string, int> > &a, const vector<pair<string, int> > &b) {
+    return calculateRouteTime(a) < calculateRouteTime(b);
 }
 
 void navigate(const string &st, const string &des) {
     getLinesInfo();
 
     ans.clear();
+    route.clear();
+    route.emplace_back(st, 0);
     dfs(st, des);
     sort(ans.begin(), ans.end(), cmp);
     cout << '\n';
     for (int i = 1; i <= min((int) ans.size(), 3); i++) {
-        auto &[rou, time] = ans[i - 1];
+        auto &rou = ans[i - 1];
         cout << "route " << i << ", including " << rou.size() << " stations on this route, ";
+        int time = calculateRouteTime(rou);
         int hr = time / 60, mi = time % 60;
         mi = (int) (mi * (1.0 + (60.0 - mi) / 2.0 / 60.0));
         if (hr > 0) {
@@ -82,15 +96,17 @@ void navigate(const string &st, const string &des) {
         } else {
             cout << "arrive within " << mi << "min:\n";
         }
+        cout << "Line [" << rou[1].second << "]: ";
         for (int j = 0; j < rou.size(); j++) {
+            auto &[staName, line] = rou[j];
             if (j) {
                 cout << " => ";
             }
-            if (j - 2 >= 0 and stations[rou[j]].lines[0] != stations[rou[j - 2]].lines[0]
-                and stations[rou[j - 1]].lines.size() > 1) {
-                cout << "Transfer to Line [" << stations[rou[j]].lines[0] << "]\n";
+            if (j > 1 and line != rou[j - 1].second) {
+                cout << "Transfer to Line [" << line << "]\n";
+                cout << "Line [" << line << "]: ";
             }
-            cout << rou[j];
+            cout << staName;
         }
         cout << "\n\n";
     }
