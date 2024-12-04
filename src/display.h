@@ -5,6 +5,10 @@ void displayMenu();
 
 void displayNavigation();
 
+void displayStationInfo();
+
+void displayCommentInteraction();
+
 void showLines();
 
 #endif //MINIMETRO_DISPLAY_H

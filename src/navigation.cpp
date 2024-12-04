@@ -143,8 +143,6 @@ void printRouteInfo(const vector<pair<string, int> > &rou) {
 }
 
 void navigate(const string &st, const string &des) {
-    getLinesInfo();
-
     ans.clear();
     route.clear();
     route.emplace_back(st, 0);

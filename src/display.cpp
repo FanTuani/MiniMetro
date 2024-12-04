@@ -6,13 +6,7 @@
 #include "navigation.h"
 #include "linkStation.h"
 
-void displayStationInfo();
-
 using namespace std;
-
-void test() {
-
-}
 
 void displayMenu() {
     clear_screen();
@@ -20,7 +14,8 @@ void displayMenu() {
     cout << "1. Navigation\n";
     cout << "2. Show existing lines\n";
     cout << "3. Search station info\n";
-    cout << "4. Exit\n";
+    cout << "4. Add comments\n";
+    cout << "5. Exit\n";
     int op;
     cin >> op;
     switch (op) {
@@ -34,27 +29,52 @@ void displayMenu() {
             displayStationInfo();
             break;
         case 4:
-            exit(0);
+            displayCommentInteraction();
+            break;
         case 5:
-            test();
+            exit(0);
         default:
             return;
     }
 }
 
-void displayStationInfo() {
+void displayCommentInteraction() {
     clear_screen();
-    cout << "station name:\n";
+
+    cout << "Station name to comment: ";
     string name;
     cin >> name;
-    getLinesInfo();
+    getchar();
+    if (stations.find(name) == stations.end()) {
+        cout << "INVALID STATION NAME\n";
+        getchar();
+        return;
+    }
+    cout << "Enter your comment: \n- ";
+    string comment;
+    getline(cin, comment);
+    if (comment.empty()) {
+        cout << "COMMENT CANNOT BE VOID\n";
+        getchar();
+        return;
+    }
+    stations[name].comments.push_back(comment);
+    cout << "Comment has been recorded, press ENTER to continue...\n";
+    getchar();
+}
+
+void displayStationInfo() {
+    clear_screen();
+    cout << "Station name: ";
+    string name;
+    cin >> name;
     if (stations.find(name) == stations.end()) {
         cout << "NO SUCH STATION\n";
         getchar();
         getchar();
         return;
     }
-    cout << '\n';
+    clear_screen();
     Station &station = stations[name];
     cout << "Station name: " << name;
     for (int line: station.lines) {
@@ -70,6 +90,14 @@ void displayStationInfo() {
         cout << ' ';
     }
     cout << '\n';
+    cout << "Station comments: ";
+    if (station.comments.empty()) {
+        cout << "none";
+    }
+    cout << '\n';
+    for (auto &comment: station.comments) {
+        cout << "- " << comment << '\n';
+    }
     getchar();
     getchar();
 }
@@ -81,7 +109,6 @@ void displayNavigation() {
     cin >> start;
     cout << "Destination: ";
     cin >> destination;
-    getLinesInfo();
     if (stations.find(start) == stations.end() or stations.find(destination) == stations.end()) {
         cout << "INVALID STATION NAME\n";
         getchar();

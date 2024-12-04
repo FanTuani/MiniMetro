@@ -1,9 +1,9 @@
-#include <iostream>
 #include "display.h"
+#include "navigation.h"
 
 int main() {
+    getLinesInfo();
     while (true) {
         displayMenu();
     }
-    return 0;
 }

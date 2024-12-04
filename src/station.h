@@ -16,6 +16,7 @@ public:
     bool open, end;
     string name;
     vector<LinkStation> con;
+    vector<string> comments;
 
     Station();
 
