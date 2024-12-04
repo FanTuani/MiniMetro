@@ -72,8 +72,74 @@ int calculateRouteTime(const vector<pair<string, int> > &rou) {
     return res;
 }
 
-bool cmp(const vector<pair<string, int> > &a, const vector<pair<string, int> > &b) {
+int calculateRouteTransfer(const vector<pair<string, int> > &rou) {
+    int res = 0;
+    for (int i = 0; i < rou.size(); i++) {
+        auto &[staName, line] = rou[i];
+        if (i > 1 and line != rou[i - 1].second) {
+            res++;
+        }
+    }
+    return res;
+}
+
+bool timeCmp(const vector<pair<string, int> > &a, const vector<pair<string, int> > &b) {
+    if (calculateRouteTime(a) == calculateRouteTime(b)) {
+        if (calculateRouteTransfer(a) == calculateRouteTransfer(b)) {
+            return a.size() < b.size();
+        }
+        return calculateRouteTransfer(a) < calculateRouteTransfer(b);
+    }
     return calculateRouteTime(a) < calculateRouteTime(b);
+}
+
+bool transferCmp(const vector<pair<string, int> > &a, const vector<pair<string, int> > &b) {
+    if (calculateRouteTransfer(a) == calculateRouteTransfer(b)) {
+        if (calculateRouteTime(a) == calculateRouteTime(b)) {
+            return a.size() < b.size();
+        }
+        return calculateRouteTransfer(a) < calculateRouteTransfer(b);
+    }
+    return calculateRouteTransfer(a) < calculateRouteTransfer(b);
+}
+
+bool stationCmp(const vector<pair<string, int> > &a, const vector<pair<string, int> > &b) {
+    if (a.size() == b.size()) {
+        if (calculateRouteTime(a) == calculateRouteTime(b)) {
+            return calculateRouteTransfer(a) < calculateRouteTransfer(b);
+        }
+        return calculateRouteTime(a) < calculateRouteTime(b);
+    }
+    return a.size() < b.size();
+}
+
+void printRouteInfo(const vector<pair<string, int> > &rou) {
+    cout << "including " << rou.size() << " stations and " << calculateRouteTransfer(rou) << " transfers. ";
+    int time = calculateRouteTime(rou) + calculateRouteTransfer(rou) * 3;
+    int hr = time / 60, mi = time % 60;
+//    mi = (int) (mi * (1.0 + (60.0 - mi) / 2.0 / 60.0));
+    if (hr > 0) {
+        cout << "Travel time: " << hr << "h " << mi << "min:\n";
+    } else {
+        cout << "Travel time: " << mi << "min:\n";
+    }
+    cout << "- Line [" << rou[1].second << "]: ";
+    int intervalTime = 0;
+    for (int j = 0; j < rou.size(); j++) {
+        auto &[staName, line] = rou[j];
+        if (j) {
+            cout << " => ";
+            intervalTime += stations[staName].getTimeNearBy(rou[j - 1].first);
+        }
+        if (j > 1 and line != rou[j - 1].second) {
+            cout << "Transfer to Line [" << line << "] (total time: " << intervalTime << "min)\n";
+            cout << "- Line [" << line << "]: ";
+            intervalTime = 0;
+        }
+        cout << staName;
+    }
+    cout << " (total time: " << intervalTime << "min)";
+    cout << "\n\n";
 }
 
 void navigate(const string &st, const string &des) {
@@ -83,36 +149,31 @@ void navigate(const string &st, const string &des) {
     route.clear();
     route.emplace_back(st, 0);
     dfs(st, des);
-    sort(ans.begin(), ans.end(), cmp);
     cout << '\n';
-    for (int i = 1; i <= min((int) ans.size(), 3); i++) {
-        auto &rou = ans[i - 1];
-        cout << "route " << i << ": " << rou.size() << " stations, ";
-        int time = calculateRouteTime(rou);
-        int hr = time / 60, mi = time % 60;
-        mi = (int) (mi * (1.0 + (60.0 - mi) / 2.0 / 60.0));
-        if (hr > 0) {
-            cout << "travel time: " << hr << "h " << mi << "min:\n";
-        } else {
-            cout << "travel time: " << mi << "min:\n";
-        }
-        cout << "Line [" << rou[1].second << "]: ";
-        int intervalTime = 0;
-        for (int j = 0; j < rou.size(); j++) {
-            auto &[staName, line] = rou[j];
-            if (j) {
-                cout << " => ";
-                intervalTime += stations[staName].getTimeNearBy(rou[j - 1].first);
+    vector<vector<pair<string, int> > > out;
+    bool outed[3] = {false, false, false};
+    string tag[3] = {"[Fastest travel time] ", "[Fewest transfers] ", "[Fewest stations] "};
+
+    sort(ans.begin(), ans.end(), timeCmp);
+    out.push_back(ans[0]);
+    sort(ans.begin(), ans.end(), transferCmp);
+    out.push_back(ans[0]);
+    sort(ans.begin(), ans.end(), stationCmp);
+    out.push_back(ans[0]);
+
+    int routeCnt = 1;
+    for (int i = 0; i < 3; i++) {
+        if (outed[i]) continue;
+        cout << "Route " << routeCnt++ << ": ";
+        cout << tag[i];
+        for (int j = i + 1; j < 3; j++) {
+            if (out[j] == out[i]) {
+                cout << tag[j];
+                outed[j] = true;
             }
-            if (j > 1 and line != rou[j - 1].second) {
-                cout << "Transfer to Line [" << line << "] (total time: " << intervalTime << "min)\n";
-                cout << "Line [" << line << "]: ";
-                intervalTime = 0;
-            }
-            cout << staName;
         }
-        cout << " (total time: " << intervalTime << "min)";
-        cout << "\n\n";
+        cout << "\n";
+        printRouteInfo(out[i]);
     }
 
     getchar();
