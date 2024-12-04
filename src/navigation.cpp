@@ -68,7 +68,7 @@ int calculateRouteTime(const vector<pair<string, int> > &rou) {
         auto &[name, line] = rou[i];
         res += stations[name].getTimeNearBy(rou[i + 1].first);
     }
-    return res;
+    return res + calculateRouteTransfer(rou) * 3;
 }
 
 int calculateRouteTransfer(const vector<pair<string, int> > &rou) {
@@ -115,7 +115,7 @@ bool stationCmp(const vector<pair<string, int> > &a, const vector<pair<string, i
 void printRouteInfo(const vector<pair<string, int> > &rou) {
     cout << "including " << rou.size() << " stations and ";
     cout << calculateRouteTransfer(rou) << " transfers. ";
-    int time = calculateRouteTime(rou) + calculateRouteTransfer(rou) * 3;
+    int time = calculateRouteTime(rou);
     int hr = time / 60, mi = time % 60;
 //    mi = (int) (mi * (1.0 + (60.0 - mi) / 2.0 / 60.0));
     if (hr > 0) {

@@ -1,6 +1,0 @@
-#ifndef MINIMETRO_COMMENT_H
-#define MINIMETRO_COMMENT_H
-
-
-
-#endif //MINIMETRO_COMMENT_H
