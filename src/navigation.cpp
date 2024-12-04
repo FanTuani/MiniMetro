@@ -87,27 +87,31 @@ void navigate(const string &st, const string &des) {
     cout << '\n';
     for (int i = 1; i <= min((int) ans.size(), 3); i++) {
         auto &rou = ans[i - 1];
-        cout << "route " << i << ", including " << rou.size() << " stations on this route, ";
+        cout << "route " << i << ": " << rou.size() << " stations, ";
         int time = calculateRouteTime(rou);
         int hr = time / 60, mi = time % 60;
         mi = (int) (mi * (1.0 + (60.0 - mi) / 2.0 / 60.0));
         if (hr > 0) {
-            cout << "arrive within " << hr << "h " << mi << "min:\n";
+            cout << "travel time: " << hr << "h " << mi << "min:\n";
         } else {
-            cout << "arrive within " << mi << "min:\n";
+            cout << "travel time: " << mi << "min:\n";
         }
         cout << "Line [" << rou[1].second << "]: ";
+        int intervalTime = 0;
         for (int j = 0; j < rou.size(); j++) {
             auto &[staName, line] = rou[j];
             if (j) {
                 cout << " => ";
+                intervalTime += stations[staName].getTimeNearBy(rou[j - 1].first);
             }
             if (j > 1 and line != rou[j - 1].second) {
-                cout << "Transfer to Line [" << line << "]\n";
+                cout << "Transfer to Line [" << line << "] (total time: " << intervalTime << "min)\n";
                 cout << "Line [" << line << "]: ";
+                intervalTime = 0;
             }
             cout << staName;
         }
+        cout << " (total time: " << intervalTime << "min)";
         cout << "\n\n";
     }
 
