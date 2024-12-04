@@ -12,7 +12,7 @@ public:
 
     LinkStation();
 
-    LinkStation(const Station &station, int time, int line);
+    LinkStation(Station station, int time, int line);
 };
 
 #endif //MINIMETRO_LINKSTATION_H

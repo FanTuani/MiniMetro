@@ -60,7 +60,6 @@ void dfs(const string &now, const string &des, int time = 0) {
             route.pop_back();
         }
     }
-
 }
 
 int calculateRouteTime(const vector<pair<string, int> > &rou) {
@@ -98,7 +97,7 @@ bool transferCmp(const vector<pair<string, int> > &a, const vector<pair<string, 
         if (calculateRouteTime(a) == calculateRouteTime(b)) {
             return a.size() < b.size();
         }
-        return calculateRouteTransfer(a) < calculateRouteTransfer(b);
+        return calculateRouteTime(a) < calculateRouteTime(b);
     }
     return calculateRouteTransfer(a) < calculateRouteTransfer(b);
 }
@@ -114,7 +113,8 @@ bool stationCmp(const vector<pair<string, int> > &a, const vector<pair<string, i
 }
 
 void printRouteInfo(const vector<pair<string, int> > &rou) {
-    cout << "including " << rou.size() << " stations and " << calculateRouteTransfer(rou) << " transfers. ";
+    cout << "including " << rou.size() << " stations and ";
+    cout << calculateRouteTransfer(rou) << " transfers. ";
     int time = calculateRouteTime(rou) + calculateRouteTransfer(rou) * 3;
     int hr = time / 60, mi = time % 60;
 //    mi = (int) (mi * (1.0 + (60.0 - mi) / 2.0 / 60.0));
@@ -149,6 +149,7 @@ void navigate(const string &st, const string &des) {
     route.clear();
     route.emplace_back(st, 0);
     dfs(st, des);
+
     cout << '\n';
     vector<vector<pair<string, int> > > out;
     bool outed[3] = {false, false, false};
