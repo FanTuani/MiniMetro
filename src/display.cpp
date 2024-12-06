@@ -5,6 +5,7 @@
 #include "station.h"
 #include "navigation.h"
 #include "linkStation.h"
+#include "admin.h"
 
 using namespace std;
 
@@ -15,7 +16,8 @@ void displayMenu() {
     cout << "2. Show existing lines\n";
     cout << "3. Search station info\n";
     cout << "4. Add comments\n";
-    cout << "5. Exit\n";
+    cout << "5. Admin menu\n";
+    cout << "6. Exit\n";
     int op;
     cin >> op;
     switch (op) {
@@ -32,6 +34,9 @@ void displayMenu() {
             displayCommentInteraction();
             break;
         case 5:
+            displayAdminMenu();
+            break;
+        case 6:
             exit(0);
         default:
             return;
