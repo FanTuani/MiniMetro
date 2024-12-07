@@ -2,6 +2,7 @@
 #include <set>
 #include <vector>
 #include "admin.h"
+#include "station.h"
 #include "utils.h"
 
 using namespace std;
@@ -18,12 +19,20 @@ void displayAdminMenu() {
     }
     clear_screen();
     cout << "Admin management\n";
-    cout << "1. Return\n";
+    cout << "1. Station management\n";
+    cout << "2. Comments management\n";
+    cout << "3. Return\n";
     char op;
     cin >> op;
     getchar();
     switch (op) {
         case '1':
+            stationManagement();
+            break;
+        case '2':
+            commentsManagement();
+            break;
+        case '3':
             return;
     }
 }
@@ -109,4 +118,88 @@ void adminRegister() {
     accounts.insert({account, password});
     cout << "Registered successfully\n";
     getchar();
+}
+
+void stationManagement() {
+    clear_screen();
+
+    cout << "Station name: ";
+    string name;
+    cin >> name;
+    getchar();
+    if (stations.find(name) == stations.end()) {
+        cout << "INVALID STATION NAME\n";
+        getchar();
+        return;
+    }
+    Station &station = stations[name];
+    clear_screen();
+    station.showInfo();
+    cout << "\n----- Management menu -----\n";
+    cout << "1. Change state\n";
+    cout << "2. Return\n";
+    char op;
+    cin >> op;
+    getchar();
+    switch (op) {
+        case '1':
+            clear_screen();
+            if (station.open) {
+                cout << "Station closed\n";
+            } else {
+                cout << "Station opened\n";
+            }
+            station.open = !station.open;
+            getchar();
+            break;
+        default:
+            return;
+    }
+}
+
+void commentsManagement() {
+    clear_screen();
+
+    cout << "Station name: ";
+    string name;
+    cin >> name;
+    getchar();
+    if (stations.find(name) == stations.end()) {
+        cout << "INVALID STATION NAME\n";
+        getchar();
+        return;
+    }
+    Station &station = stations[name];
+    clear_screen();
+    station.showInfo();
+    cout << "\n----- Management menu -----\n";
+    cout << "1. Delete comment\n";
+    cout << "2. Return\n";
+    char op;
+    cin >> op;
+    getchar();
+
+    switch (op) {
+        case '1':
+            clear_screen();
+            cout << "Select comment to be deleted\n";
+            for (int i = 0; i < station.comments.size(); i++) {
+                cout << i + 1 << ": - " << station.comments[i] << '\n';
+            }
+            int num;
+            cin >> num;
+            getchar();
+            num--;
+            if (num < 0 or num >= station.comments.size()) {
+                cout << "INVALID OPERATION\n";
+                getchar();
+                return;
+            }
+            station.comments.erase(station.comments.begin() + num);
+            cout << "Delete successfully\n";
+            getchar();
+            break;
+        default:
+            return;
+    }
 }

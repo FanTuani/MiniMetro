@@ -9,4 +9,8 @@ void adminLogIn();
 
 void adminRegister();
 
+void stationManagement();
+
+void commentsManagement();
+
 #endif //MINIMETRO_ADMIN_H

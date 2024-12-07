@@ -1,18 +1,18 @@
 #ifndef MINIMETRO_LINKSTATION_H
 #define MINIMETRO_LINKSTATION_H
 
-#include "station.h"
-
 using namespace std;
+
+class Station;
 
 class LinkStation {
 public:
-    Station station;
+    Station &station;
     int time, line;
 
-    LinkStation();
+    explicit LinkStation(Station &station);
 
-    LinkStation(Station station, int time, int line);
+    LinkStation(Station &station, int time, int line);
 };
 
 #endif //MINIMETRO_LINKSTATION_H

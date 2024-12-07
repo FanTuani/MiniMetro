@@ -5,8 +5,7 @@
 #include <vector>
 #include <set>
 #include <map>
-
-class LinkStation;
+#include "linkStation.h"
 
 using namespace std;
 
@@ -27,6 +26,8 @@ public:
     [[nodiscard]] int getTimeNearBy(const Station &to) const;
 
     [[nodiscard]] int getTimeNearBy(const string &staName) const;
+
+    void showInfo() const;
 };
 
 extern map<string, Station> stations;

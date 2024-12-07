@@ -81,28 +81,7 @@ void displayStationInfo() {
     }
     clear_screen();
     Station &station = stations[name];
-    cout << "Station name: " << name;
-    for (int line: station.lines) {
-        cout << '[' << line << "]";
-    }
-    cout << "\nStation state: " << (station.open ? "opening" : "closing");
-    cout << "\nConnected station" << (station.con.size() > 1 ? "s: " : ": ");
-    for (auto &[sta, w, l]: station.con) {
-        cout << sta.name;
-        for (int line: sta.lines) {
-            cout << '[' << line << "]";
-        }
-        cout << ' ';
-    }
-    cout << '\n';
-    cout << "Station comments: ";
-    if (station.comments.empty()) {
-        cout << "none";
-    }
-    cout << '\n';
-    for (auto &comment: station.comments) {
-        cout << "- " << comment << '\n';
-    }
+    station.showInfo();
     getchar();
     getchar();
 }
