@@ -6,37 +6,26 @@
 #include "navigation.h"
 #include "linkStation.h"
 #include "admin.h"
+#include "user.h"
 
 using namespace std;
 
 void displayMenu() {
     clear_screen();
     cout << "Welcome Qingdao Mini Metro\n";
-    cout << "1. Navigation\n";
-    cout << "2. Show existing lines\n";
-    cout << "3. Search station info\n";
-    cout << "4. Add comments\n";
-    cout << "5. Admin menu\n";
-    cout << "6. Exit\n";
+    cout << "1. User menu\n";
+    cout << "2. Admin menu\n";
+    cout << "3. Exit\n";
     int op;
     cin >> op;
     switch (op) {
         case 1:
-            displayNavigation();
+            displayUserMenu();
             break;
         case 2:
-            showLines();
-            break;
-        case 3:
-            displayStationInfo();
-            break;
-        case 4:
-            displayCommentInteraction();
-            break;
-        case 5:
             displayAdminMenu();
             break;
-        case 6:
+        case 3:
             exit(0);
         default:
             return;

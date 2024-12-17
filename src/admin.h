@@ -13,4 +13,6 @@ void stationManagement();
 
 void commentsManagement();
 
+void basicManagement();
+
 #endif //MINIMETRO_ADMIN_H

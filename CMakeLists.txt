@@ -16,4 +16,6 @@ add_executable(MiniMetro src/main.cpp
         src/linkStation.h
         src/admin.cpp
         src/admin.h
+        src/user.h
+        src/user.cpp
 )

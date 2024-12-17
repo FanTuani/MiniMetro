@@ -4,7 +4,7 @@
 #include "admin.h"
 #include "station.h"
 #include "utils.h"
-
+#include "display.h"
 using namespace std;
 
 bool isLoggedIn = false;
@@ -21,7 +21,8 @@ void displayAdminMenu() {
     cout << "Admin management\n";
     cout << "1. Station management\n";
     cout << "2. Comments management\n";
-    cout << "3. Return\n";
+    cout << "3. Basic operate\n";
+    cout << "4. Return\n";
     char op;
     cin >> op;
     getchar();
@@ -33,13 +34,16 @@ void displayAdminMenu() {
             commentsManagement();
             break;
         case '3':
+            basicManagement();
+        break;
+        case '4':
             return;
     }
 }
 
 void logInMenu() {
     clear_screen();
-    cout << "Login menu\n";
+    cout << "Admin Login Menu\n";
     cout << "1. Login\n";
     cout << "2. Register\n";
     cout << "3. Logout\n";
@@ -199,6 +203,39 @@ void commentsManagement() {
             cout << "Delete successfully\n";
             getchar();
             break;
+        default:
+            return;
+    }
+}
+
+void basicManagement() {
+    cout << "Basic Management Menu\n";
+    cout << "1. Navigation\n";
+    cout << "2. Show existing lines\n";
+    cout << "3. Search station info\n";
+    cout << "4. Add comments\n";
+    cout << "5. Admin menu\n";
+    cout << "6. Exit\n";
+    int op;
+    cin >> op;
+    switch (op) {
+        case 1:
+            displayNavigation();
+        break;
+        case 2:
+            showLines();
+        break;
+        case 3:
+            displayStationInfo();
+        break;
+        case 4:
+            displayCommentInteraction();
+        break;
+        case 5:
+            displayAdminMenu();
+        break;
+        case 6:
+            exit(0);
         default:
             return;
     }
