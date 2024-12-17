@@ -9,9 +9,9 @@
 
 void displayUserMenu();
 
-void userlogInMenu();
+void userLoginMenu();
 
-void userLogIn();
+void userLogin();
 
 void userRegister();
 

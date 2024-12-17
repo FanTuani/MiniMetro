@@ -9,17 +9,17 @@
 using namespace std;
 
 bool isUserLoggedIn = false;
-string UserloginAcc;
+string UserLoginAcc;
 const vector<pair<string, string> > preAcc = {{"wjr", "123"}};
 set<pair<string, string>> accountsUser;
 
 void displayUserMenu() {
-    userlogInMenu();
+    userLoginMenu();
     if (!isUserLoggedIn) {
         return;
     }
     clear_screen();
-    cout << "User Mangement\n";
+    cout << "User Management\n";
     cout << "1. Navigation\n";
     cout << "2. Show existing lines\n";
     cout << "3. Search station info\n";
@@ -40,13 +40,11 @@ void displayUserMenu() {
         case 4:
             displayCommentInteraction();
         break;
-        case 5:
-            exit(0);
         default:
             return;
     }
 }
-void userlogInMenu() {
+void userLoginMenu() {
     clear_screen();
     cout << "User Login Menu\n";
     cout << "1. Login\n";
@@ -58,7 +56,7 @@ void userlogInMenu() {
     getchar();
     switch (op) {
         case '1':
-            userLogIn();
+            userLogin();
         break;
         case '2':
             userRegister();
@@ -72,20 +70,20 @@ void userlogInMenu() {
             cout << "Log out successfully\n";
         }
         getchar();
-        userlogInMenu();
+            userLoginMenu();
         break;
         default:
             return;
     }
 }
-void userLogIn() {
+void userLogin() {
     for (auto &acc: preAcc) {
         accountsUser.insert(acc);
     }
     clear_screen();
     if (isUserLoggedIn) {
         cout << "You have logged in!\n";
-        cout << "Account: " << UserloginAcc << '\n';
+        cout << "Account: " << UserLoginAcc << '\n';
         getchar();
         return;
     }
@@ -98,7 +96,7 @@ void userLogIn() {
     getchar();
     if (accountsUser.find({account, password}) != accountsUser.end()) {
         cout << "Login successfully!\n";
-        UserloginAcc = account;
+        UserLoginAcc = account;
         isUserLoggedIn = true;
         getchar();
         return;
