@@ -11,4 +11,6 @@ void displayCommentInteraction();
 
 void showLines();
 
+void deleteComment();
+
 #endif //MINIMETRO_DISPLAY_H

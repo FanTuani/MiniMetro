@@ -1,16 +1,19 @@
 #include <iostream>
 #include <set>
+#include <map>
 #include <vector>
 #include "admin.h"
 #include "station.h"
 #include "utils.h"
 #include "display.h"
+#include "user.h"
 using namespace std;
 
 bool isLoggedIn = false;
 string loginAcc;
 const vector<pair<string, string> > preAcc = {{"wjr", "123"}};
 set<pair<string, string>> accounts;
+map<string, string> AccountsUser;
 
 void displayAdminMenu() {
     logInMenu();
@@ -213,7 +216,7 @@ void basicManagement() {
     cout << "1. Navigation\n";
     cout << "2. Show existing lines\n";
     cout << "3. Search station info\n";
-    cout << "4. Add comments\n";
+    cout << "4. Comment manage menu\n";
     cout << "5. Admin menu\n";
     cout << "6. Exit\n";
     int op;
@@ -229,7 +232,7 @@ void basicManagement() {
             displayStationInfo();
         break;
         case 4:
-            displayCommentInteraction();
+            commentManage();
         break;
         case 5:
             displayAdminMenu();
@@ -239,4 +242,37 @@ void basicManagement() {
         default:
             return;
     }
+}
+
+void adminChangeUserPassword() {
+    clear_screen();
+
+    if (!isLoggedIn) {
+        cout << "You must be logged in as an admin to change a user's password.\n";
+        return;
+    }
+
+    string username, newpassword, rep;
+    cout << "Enter the username of the account to change the password: ";
+    cin >> username;
+    cout << "Enter the new password: ";
+    cin >> newpassword;
+    cout << "Enter the new password again: ";
+    cin >> rep;
+    getchar();
+    if (newpassword != rep) {
+        cout << "PASSWORD CHANGE FAILED, DIFFERENT PASSWORDS ENTERED\n";
+        return;
+    }
+
+    // 查找用户是否存在
+    auto it = AccountsUser.find(username);
+    if (it == AccountsUser.end()) {
+        cout << "USER NOT FOUND\n";
+        return;
+    }
+
+    // 更新密码
+    it->second = newpassword;
+    cout << "Password changed successfully for user: " << username << endl;
 }

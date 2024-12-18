@@ -15,4 +15,6 @@ void commentsManagement();
 
 void basicManagement();
 
+void changerUserPassword();
+
 #endif //MINIMETRO_ADMIN_H

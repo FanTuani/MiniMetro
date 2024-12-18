@@ -119,3 +119,39 @@ void showLines() {
     getchar();
 }
 
+void deleteComment() {
+    clear_screen();
+
+    cout << "Station name to delete a comment: ";
+    string name;
+    cin >> name;
+    getchar();
+    if (stations.find(name) == stations.end()) {
+        cout << "INVALID STATION NAME\n";
+        getchar();
+        return;
+    }
+    Station &station = stations[name];
+    clear_screen();
+    station.showInfo();
+    cout << "\n----- Select Comment to Delete -----\n";
+    cout << "Comment selection: ";
+    vector<string> comments = station.comments;
+    int selection = 0;
+    for (const auto& comment : comments) {
+        cout << selection + 1 << ": " << comment << '\n';
+        selection++;
+    }
+    cout << "Enter the number of the comment to delete: ";
+    int choice;
+    cin >> choice;
+    getchar();
+    if (choice < 1 || choice > static_cast<int>(comments.size())) {
+        cout << "INVALID COMMENT SELECTION\n";
+        return;
+    }
+    choice--; // Adjust for 0-based indexing
+    station.comments.erase(station.comments.begin() + choice);
+    cout << "Comment deleted successfully.\n";
+    getchar();
+}
