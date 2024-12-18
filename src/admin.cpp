@@ -13,7 +13,13 @@ bool isLoggedIn = false;
 string loginAcc;
 const vector<pair<string, string> > preAcc = {{"wjr", "123"}};
 set<pair<string, string>> accounts;
-map<string, string> AccountsUser;
+struct User {
+    std::string account;
+    std::string password;
+    bool isMuted;
+};
+
+std::map<std::string, User> AccountsUser;
 
 void displayAdminMenu() {
     logInMenu();
@@ -24,22 +30,40 @@ void displayAdminMenu() {
     cout << "Admin management\n";
     cout << "1. Station management\n";
     cout << "2. Comments management\n";
-    cout << "3. Basic operate\n";
-    cout << "4. Return\n";
+    cout << "3. Mute user\n";
+    cout << "4. Unmute user\n";
+    cout << "5. Basic operate\n";
+    cout << "6. Return\n";
     char op;
     cin >> op;
     getchar();
     switch (op) {
         case '1':
             stationManagement();
-            break;
+        break;
         case '2':
             commentsManagement();
+        break;
+        case '3': {
+            string username;
+            cout << "Enter the username to mute: ";
+            cin >> username;
+            muteUser(username);
             break;
-        case '3':
+        }
+        case '4': {
+            string username;
+            cout << "Enter the username to unmute: ";
+            cin >> username;
+            unmuteUser(username);
+            break;
+        }
+        case '5':
             basicManagement();
         break;
-        case '4':
+        case '6':
+            return;
+        default:
             return;
     }
 }
@@ -164,7 +188,7 @@ void stationManagement() {
     }
 }
 
-void commentsManagement() {
+void commentsManage() {
     clear_screen();
 
     cout << "Station name: ";
@@ -232,7 +256,7 @@ void basicManagement() {
             displayStationInfo();
         break;
         case 4:
-            commentManage();
+            commentManagement();
         break;
         case 5:
             displayAdminMenu();
@@ -273,6 +297,26 @@ void adminChangeUserPassword() {
     }
 
     // 更新密码
-    it->second = newpassword;
+    it->second.password = newpassword;
     cout << "Password changed successfully for user: " << username << endl;
+}
+
+void muteUser(const std::string& username) {
+    auto it = AccountsUser.find(username);
+    if (it != AccountsUser.end()) {
+        it->second.isMuted = true;
+        std::cout << "User " << username << " has been muted.\n";
+    } else {
+        std::cout << "User not found.\n";
+    }
+}
+
+void unmuteUser(const std::string& username) {
+    auto it = AccountsUser.find(username);
+    if (it != AccountsUser.end()) {
+        it->second.isMuted = false;
+        std::cout << "User " << username << " has been unmuted.\n";
+    } else {
+        std::cout << "User not found.\n";
+    }
 }

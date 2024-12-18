@@ -12,7 +12,14 @@ using namespace std;
 bool isUserLoggedIn = false;
 string UserLoginAcc;
 const map<string, string> preAcc = {{"wjr", "123"}};
-map<string, string> accountsUser;
+class User {
+public:
+    std::string account;
+    std::string password;
+    bool isMuted;
+};
+
+std::map<std::string, User> accountsUser;
 
 void displayUserMenu() {
     userLoginMenu();
@@ -39,7 +46,7 @@ void displayUserMenu() {
             displayStationInfo();
         break;
         case 4:
-            commentManage();
+            commentManagement();
         break;
         default:
             return;
@@ -99,7 +106,7 @@ void userLogin() {
     cout << "Password: ";
     cin >> password;
     getchar();
-    if (accountsUser.find(account) != accountsUser.end() && accountsUser[account] == password) {
+    if (accountsUser.find(account) != accountsUser.end() && accountsUser[account].password == password) {
         cout << "Login successfully!\n";
         UserLoginAcc = account;
         isUserLoggedIn = true;
@@ -125,7 +132,7 @@ void userRegister() {
         getchar();
         return;
     }
-    accountsUser[account] = password;
+    accountsUser[account].password = password;
     cout << "Registered successfully\n";
     getchar();
 }
@@ -148,23 +155,43 @@ void userChange() {
         return;
     }
     // 检查当前密码是否正确
-    if (accountsUser.find(account) != accountsUser.end() && accountsUser[account] == currentPassword) {
+    if (accountsUser.find(account) != accountsUser.end() && accountsUser[account].password == currentPassword) {
         // 更新密码
-        accountsUser[account] = newpassword;
+        accountsUser[account].password = newpassword;
         cout << "Password change successfully\n";
     } else {
         cout << "PASSWORD CHANGE FAILED, INCORRECT CURRENT PASSWORD\n";
     }
     getchar();
 }
-void commentManage() {
+void commentsManagement() {
     clear_screen();
-    cout << "Comment Manager Menu\n";
-    cout << "1. Add new comment\n";
-    cout << "2. Delete comment\n";
-    cout << "3. return\n";
+
+    cout << "Station name: ";
+    string name;
+    cin >> name;
+    getchar();
+    if (stations.find(name) == stations.end()) {
+        cout << "INVALID STATION NAME\n";
+        getchar();
+        return;
+    }
+    Station &station = stations[name];
+    clear_screen();
+    station.showInfo();
+
+    if (accountsUser[UserLoginAcc].isMuted) {
+        cout << "You have been muted and cannot use comment features.\n";
+        return;
+    }
+
+    cout << "\n----- Management menu -----\n";
+    cout << "1. Delete comment\n";
+    cout << "2. Return\n";
     char op;
     cin >> op;
+    getchar();
+
     switch (op) {
         case 1: displayCommentInteraction();
         break;
