@@ -168,7 +168,7 @@ void commentManage() {
     switch (op) {
         case 1: displayCommentInteraction();
         break;
-        case 2: deleteComment()();
+        case 2: deleteComment();
         break;
         case 3: return;
     }
