@@ -46,7 +46,7 @@ void displayUserMenu() {
             displayStationInfo();
         break;
         case 4:
-            commentManagement();
+            commentsManagement();
         break;
         default:
             return;
@@ -186,18 +186,18 @@ void commentsManagement() {
     }
 
     cout << "\n----- Management menu -----\n";
-    cout << "1. Delete comment\n";
+    cout << "1. Add comment\n";
     cout << "2. Return\n";
     char op;
     cin >> op;
     getchar();
 
     switch (op) {
-        case 1: displayCommentInteraction();
+        case '1': displayCommentInteraction(name);
         break;
-        case 2: deleteComment();
+        case '2': deleteComment();
         break;
-        case 3: return;
+        case '3': return;
     }
 
 }

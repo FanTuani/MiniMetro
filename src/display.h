@@ -1,13 +1,15 @@
 #ifndef MINIMETRO_DISPLAY_H
 #define MINIMETRO_DISPLAY_H
 
+#include <string>
+
 void displayMenu();
 
 void displayNavigation();
 
 void displayStationInfo();
 
-void displayCommentInteraction();
+void displayCommentInteraction(std::string &);
 
 void showLines();
 

@@ -32,13 +32,9 @@ void displayMenu() {
     }
 }
 
-void displayCommentInteraction() {
+void displayCommentInteraction(string &name) {
     clear_screen();
 
-    cout << "Station name to comment: ";
-    string name;
-    cin >> name;
-    getchar();
     if (stations.find(name) == stations.end()) {
         cout << "INVALID STATION NAME\n";
         getchar();
@@ -138,7 +134,7 @@ void deleteComment() {
     cout << "Comment selection: ";
     vector<string> comments = station.comments;
     int selection = 0;
-    for (const auto& comment : comments) {
+    for (const auto &comment: comments) {
         cout << selection + 1 << ": " << comment << '\n';
         selection++;
     }

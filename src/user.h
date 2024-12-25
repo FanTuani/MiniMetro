@@ -17,5 +17,5 @@ void userRegister();
 
 void userChange();
 
-void commentManagement();
+void commentsManagement();
 #endif //USER_H

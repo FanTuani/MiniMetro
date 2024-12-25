@@ -256,7 +256,7 @@ void basicManagement() {
             displayStationInfo();
         break;
         case 4:
-            commentManagement();
+            commentsManagement();
         break;
         case 5:
             displayAdminMenu();
