@@ -3,7 +3,7 @@
 #include <iostream>
 #include <queue>
 #include <algorithm>
-#include "linkStation.h"
+#include "../station/linkStation.h"
 
 using namespace std;
 

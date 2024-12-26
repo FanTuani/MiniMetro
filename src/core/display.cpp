@@ -1,12 +1,12 @@
 #include <iostream>
 #include <fstream>
-#include "utils.h"
+#include "../utils.h"
 #include "display.h"
-#include "station.h"
+#include "../station/station.h"
 #include "navigation.h"
-#include "linkStation.h"
-#include "admin.h"
-#include "user.h"
+#include "../station/linkStation.h"
+#include "../userInteraction/admin.h"
+#include "../userInteraction/user.h"
 
 using namespace std;
 

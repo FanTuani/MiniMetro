@@ -11,7 +11,7 @@ void adminRegister();
 
 void stationManagement();
 
-void commentsManagement();
+void commentsManageDelete();
 
 void basicManagement();
 

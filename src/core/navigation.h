@@ -1,7 +1,7 @@
 #ifndef MINIMETRO_NAVIGATION_H
 #define MINIMETRO_NAVIGATION_H
 
-#include "station.h"
+#include "../station/station.h"
 
 void getLinesInfo();
 

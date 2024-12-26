@@ -2,9 +2,9 @@
 #include <map>
 #include <vector>
 #include "user.h"
-#include "station.h"
-#include "utils.h"
-#include "display.h"
+#include "../station/station.h"
+#include "../utils.h"
+#include "../core/display.h"
 #include "set"
 
 using namespace std;
@@ -31,7 +31,7 @@ void displayUserMenu() {
     cout << "1. Navigation\n";
     cout << "2. Show existing lines\n";
     cout << "3. Search station info\n";
-    cout << "4. Comments manage\n";
+    cout << "4. Comment\n";
     cout << "5. Exit\n";
     int op;
     cin >> op;
@@ -46,7 +46,7 @@ void displayUserMenu() {
             displayStationInfo();
         break;
         case 4:
-            commentsManagement();
+            commentMenu();
         break;
         default:
             return;
@@ -164,7 +164,7 @@ void userChange() {
     }
     getchar();
 }
-void commentsManagement() {
+void commentMenu() {
     clear_screen();
 
     cout << "Station name: ";
@@ -199,6 +199,5 @@ void commentsManagement() {
         break;
         case '3': return;
     }
-
 }
 

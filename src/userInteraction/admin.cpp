@@ -3,9 +3,9 @@
 #include <map>
 #include <vector>
 #include "admin.h"
-#include "station.h"
-#include "utils.h"
-#include "display.h"
+#include "../station/station.h"
+#include "../utils.h"
+#include "../core/display.h"
 #include "user.h"
 using namespace std;
 
@@ -42,7 +42,7 @@ void displayAdminMenu() {
             stationManagement();
         break;
         case '2':
-            commentsManagement();
+            commentsManageDelete();
         break;
         case '3': {
             string username;
@@ -188,7 +188,7 @@ void stationManagement() {
     }
 }
 
-void commentsManage() {
+void commentsManageDelete() {
     clear_screen();
 
     cout << "Station name: ";
@@ -256,7 +256,7 @@ void basicManagement() {
             displayStationInfo();
         break;
         case 4:
-            commentsManagement();
+            commentsManageDelete();
         break;
         case 5:
             displayAdminMenu();

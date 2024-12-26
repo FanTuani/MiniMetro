@@ -1,5 +1,5 @@
-#include "display.h"
-#include "navigation.h"
+#include "core/display.h"
+#include "core/navigation.h"
 
 int main() {
     getLinesInfo();
