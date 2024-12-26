@@ -10,8 +10,9 @@
 using namespace std;
 
 bool isUserLoggedIn = false;
-string UserLoginAcc;
+string userLoginAcc;
 const map<string, string> preAcc = {{"wjr", "123"}};
+
 class User {
 public:
     std::string account;
@@ -26,8 +27,9 @@ void displayUserMenu() {
     if (!isUserLoggedIn) {
         return;
     }
+    tag:
     clear_screen();
-    cout << "User Management\n";
+    cout << "User Menu\n";
     cout << "1. Navigation\n";
     cout << "2. Show existing lines\n";
     cout << "3. Search station info\n";
@@ -38,20 +40,22 @@ void displayUserMenu() {
     switch (op) {
         case 1:
             displayNavigation();
-        break;
+            break;
         case 2:
             showLines();
-        break;
+            break;
         case 3:
             displayStationInfo();
-        break;
+            break;
         case 4:
             commentMenu();
-        break;
+            break;
         default:
             return;
     }
+    goto tag;
 }
+
 void userLoginMenu() {
     clear_screen();
     cout << "User Login Menu\n";
@@ -67,35 +71,36 @@ void userLoginMenu() {
     switch (op) {
         case '1':
             userLogin();
-        break;
+            break;
         case '2':
             userRegister();
-        break;
+            break;
         case '3':
             userChange();
-        break;
+            break;
         case '4':
             clear_screen();
-        if (!isUserLoggedIn) {
-            cout << "You have not logged in!\n";
-        } else {
-            isUserLoggedIn = false;
-            cout << "Log out successfully\n";
-        }
-        getchar();
+            if (!isUserLoggedIn) {
+                cout << "You have not logged in!\n";
+            } else {
+                isUserLoggedIn = false;
+                cout << "Log out successfully\n";
+            }
+            getchar();
             userLoginMenu();
-        break;
+            break;
         case '6':
             exit(0);
         default:
             return;
     }
 }
+
 void userLogin() {
     clear_screen();
     if (isUserLoggedIn) {
         cout << "You have logged in!\n";
-        cout << "Account: " << UserLoginAcc << '\n';
+        cout << "Account: " << userLoginAcc << '\n';
         getchar();
         return;
     }
@@ -108,7 +113,7 @@ void userLogin() {
     getchar();
     if (accountsUser.find(account) != accountsUser.end() && accountsUser[account].password == password) {
         cout << "Login successfully!\n";
-        UserLoginAcc = account;
+        userLoginAcc = account;
         isUserLoggedIn = true;
         getchar();
         return;
@@ -134,6 +139,8 @@ void userRegister() {
     }
     accountsUser[account].password = password;
     cout << "Registered successfully\n";
+    isUserLoggedIn = true;
+    userLoginAcc = account;
     getchar();
 }
 
@@ -164,6 +171,7 @@ void userChange() {
     }
     getchar();
 }
+
 void commentMenu() {
     clear_screen();
 
@@ -180,7 +188,7 @@ void commentMenu() {
     clear_screen();
     station.showInfo();
 
-    if (accountsUser[UserLoginAcc].isMuted) {
+    if (accountsUser[userLoginAcc].isMuted) {
         cout << "You have been muted and cannot use comment features.\n";
         return;
     }
@@ -193,11 +201,14 @@ void commentMenu() {
     getchar();
 
     switch (op) {
-        case '1': displayCommentInteraction(name);
-        break;
-        case '2': deleteComment();
-        break;
-        case '3': return;
+        case '1':
+            displayCommentInteraction(name);
+            break;
+        case '2':
+            deleteComment();
+            break;
+        case '3':
+            return;
     }
 }
 
