@@ -8,15 +8,15 @@
 #include <iostream>
 #include <string>
 #include <map>
-
+using namespace std;
 class User {
 public:
-    std::string account;
-    std::string password;
+    string account;
+    string password;
     bool isMuted;
 };
 
-extern std::map<std::string, User> accountsUser;
+extern map<string, User> accountsUser;
 
 void displayUserMenu();
 
@@ -30,7 +30,7 @@ void userChange();
 
 void commentMenu();
 
-void muteUser(const std::string& username);
+void muteUser(const string& username);
 
-void unmuteUser(const std::string& username);
+void unmuteUser(const string& username);
 #endif //USER_H
