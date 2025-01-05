@@ -1,5 +1,7 @@
 #ifndef MINIMETRO_ADMIN_H
 #define MINIMETRO_ADMIN_H
+#include<iostream>
+
 
 void displayAdminMenu();
 

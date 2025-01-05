@@ -33,7 +33,8 @@ void displayAdminMenu() {
     cout << "3. Mute user\n";
     cout << "4. Unmute user\n";
     cout << "5. Basic operate\n";
-    cout << "6. Return\n";
+    cout << "6. Log out\n";
+    cout << "7. Return\n";
     char op;
     cin >> op;
     getchar();
@@ -62,19 +63,30 @@ void displayAdminMenu() {
             basicManagement();
         break;
         case '6':
-            return;
+            clear_screen();
+        if (!isLoggedIn) {
+            cout << "You have not logged in!\n";
+        } else {
+            isLoggedIn = false;
+            cout << "Log out successfully\n";
+        }
+        getchar();
+        logInMenu();
+        break;
         default:
             return;
     }
+    displayAdminMenu();
 }
 
 void logInMenu() {
+    if (isLoggedIn)
+        return;
     clear_screen();
     cout << "Admin Login Menu\n";
     cout << "1. Login\n";
     cout << "2. Register\n";
-    cout << "3. Logout\n";
-    cout << "4. Return\n";
+    cout << "3. Return\n";
     char op;
     cin >> op;
     getchar();
@@ -84,17 +96,6 @@ void logInMenu() {
             break;
         case '2':
             adminRegister();
-            break;
-        case '3':
-            clear_screen();
-            if (!isLoggedIn) {
-                cout << "You have not logged in!\n";
-            } else {
-                isLoggedIn = false;
-                cout << "Log out successfully\n";
-            }
-            getchar();
-            logInMenu();
             break;
         default:
             return;
@@ -236,6 +237,7 @@ void commentsManageDelete() {
 }
 
 void basicManagement() {
+    clear_screen();
     cout << "Basic Management Menu\n";
     cout << "1. Navigation\n";
     cout << "2. Show existing lines\n";
@@ -261,8 +263,6 @@ void basicManagement() {
         case 5:
             displayAdminMenu();
         break;
-        case 6:
-            exit(0);
         default:
             return;
     }
@@ -301,22 +301,27 @@ void adminChangeUserPassword() {
     cout << "Password changed successfully for user: " << username << endl;
 }
 
-void muteUser(const std::string& username) {
+void muteUser(const string& username) {
     auto it = AccountsUser.find(username);
     if (it != AccountsUser.end()) {
         it->second.isMuted = true;
-        std::cout << "User " << username << " has been muted.\n";
+        cout << "User " << username << " has been muted.\n";
     } else {
-        std::cout << "User not found.\n";
+        cout << "User not found.\n";
     }
+    getchar();
+    getchar();
+    // system("pause");
 }
 
-void unmuteUser(const std::string& username) {
+void unmuteUser(const string& username) {
     auto it = AccountsUser.find(username);
     if (it != AccountsUser.end()) {
         it->second.isMuted = false;
-        std::cout << "User " << username << " has been unmuted.\n";
+        cout << "User " << username << " has been unmuted.\n";
     } else {
-        std::cout << "User not found.\n";
+        cout << "User not found.\n";
     }
+    getchar();
+    getchar();
 }

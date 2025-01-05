@@ -34,7 +34,9 @@ void displayUserMenu() {
     cout << "2. Show existing lines\n";
     cout << "3. Search station info\n";
     cout << "4. Comment\n";
-    cout << "5. Exit\n";
+    cout << "5. Change password\n";
+    cout << "6. Logout\n";
+    cout << "7. return\n";
     int op;
     cin >> op;
     switch (op) {
@@ -50,6 +52,20 @@ void displayUserMenu() {
         case 4:
             commentMenu();
             break;
+        case '5':
+            userChange();
+        break;
+        case '6':
+            clear_screen();
+        if (!isUserLoggedIn) {
+            cout << "You have not logged in!\n";
+        } else {
+            isUserLoggedIn = false;
+            cout << "Log out successfully\n";
+        }
+        getchar();
+        userLoginMenu();
+        break;
         default:
             return;
     }
@@ -57,14 +73,14 @@ void displayUserMenu() {
 }
 
 void userLoginMenu() {
+    if (isUserLoggedIn)
+        return;
     clear_screen();
     cout << "User Login Menu\n";
     cout << "1. Login\n";
     cout << "2. Register\n";
-    cout << "3. Change password\n";
-    cout << "4. Logout\n";
-    cout << "5. return\n";
-    cout << "6. Exit\n";
+    cout << "3. return\n";
+    cout << "4. Exit\n";
     char op;
     cin >> op;
     getchar();
@@ -75,21 +91,7 @@ void userLoginMenu() {
         case '2':
             userRegister();
             break;
-        case '3':
-            userChange();
-            break;
         case '4':
-            clear_screen();
-            if (!isUserLoggedIn) {
-                cout << "You have not logged in!\n";
-            } else {
-                isUserLoggedIn = false;
-                cout << "Log out successfully\n";
-            }
-            getchar();
-            userLoginMenu();
-            break;
-        case '6':
             exit(0);
         default:
             return;
