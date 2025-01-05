@@ -9,7 +9,7 @@ void displayNavigation();
 
 void displayStationInfo();
 
-void displayCommentInteraction(std::string &);
+void displayCommentInteraction(std::string &, int flag);
 
 void showLines();
 

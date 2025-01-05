@@ -197,14 +197,15 @@ void commentMenu() {
 
     cout << "\n----- Management menu -----\n";
     cout << "1. Add comment\n";
-    cout << "2. Return\n";
+    cout << "2. Delete comment\n";
+    cout << "3. Return\n";
     char op;
     cin >> op;
     getchar();
 
     switch (op) {
         case '1':
-            displayCommentInteraction(name);
+            displayCommentInteraction(name, 0);
             break;
         case '2':
             deleteComment();

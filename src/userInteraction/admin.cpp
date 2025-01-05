@@ -205,14 +205,18 @@ void commentsManageDelete() {
     clear_screen();
     station.showInfo();
     cout << "\n----- Management menu -----\n";
-    cout << "1. Delete comment\n";
-    cout << "2. Return\n";
+    cout << "1. Respond to comment\n";
+    cout << "2. Delete comment\n";
+    cout << "3. Return\n";
     char op;
     cin >> op;
     getchar();
 
     switch (op) {
         case '1':
+            clear_screen();
+            displayCommentInteraction(name,1);
+        case '2':
             clear_screen();
             cout << "Select comment to be deleted\n";
             for (int i = 0; i < station.comments.size(); i++) {

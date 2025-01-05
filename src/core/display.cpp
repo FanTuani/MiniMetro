@@ -32,7 +32,7 @@ void displayMenu() {
     }
 }
 
-void displayCommentInteraction(string &name) {
+void displayCommentInteraction(string &name,int flag) {
     clear_screen();
 
     if (stations.find(name) == stations.end()) {
@@ -41,13 +41,16 @@ void displayCommentInteraction(string &name) {
         return;
     }
     cout << "Enter your comment: \n- ";
-    string comment;
+    string comment,Admin;
+    if (flag)
+    Admin = "Admin: ";
     getline(cin, comment);
     if (comment.empty()) {
         cout << "COMMENT CANNOT BE VOID\n";
         getchar();
         return;
     }
+    comment  = Admin + comment;
     stations[name].comments.push_back(comment);
     cout << "Comment has been recorded, press ENTER to continue...\n";
     getchar();
