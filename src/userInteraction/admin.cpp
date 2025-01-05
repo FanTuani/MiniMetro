@@ -13,13 +13,6 @@ bool isLoggedIn = false;
 string loginAcc;
 const vector<pair<string, string> > preAcc = {{"wjr", "123"}};
 set<pair<string, string>> accounts;
-struct User {
-    std::string account;
-    std::string password;
-    bool isMuted;
-};
-
-std::map<std::string, User> AccountsUser;
 
 void displayAdminMenu() {
     logInMenu();
@@ -49,14 +42,14 @@ void displayAdminMenu() {
             string username;
             cout << "Enter the username to mute: ";
             cin >> username;
-            muteUser(username);
+            muteUserPtr(username);
             break;
         }
         case '4': {
             string username;
             cout << "Enter the username to unmute: ";
             cin >> username;
-            unmuteUser(username);
+            unmuteUserPtr(username);
             break;
         }
         case '5':
@@ -294,8 +287,8 @@ void adminChangeUserPassword() {
     }
 
     // 查找用户是否存在
-    auto it = AccountsUser.find(username);
-    if (it == AccountsUser.end()) {
+    auto it = accountsUser.find(username);
+    if (it == accountsUser.end()) {
         cout << "USER NOT FOUND\n";
         return;
     }
@@ -305,27 +298,3 @@ void adminChangeUserPassword() {
     cout << "Password changed successfully for user: " << username << endl;
 }
 
-void muteUser(const string& username) {
-    auto it = AccountsUser.find(username);
-    if (it != AccountsUser.end()) {
-        it->second.isMuted = true;
-        cout << "User " << username << " has been muted.\n";
-    } else {
-        cout << "User not found.\n";
-    }
-    getchar();
-    getchar();
-    // system("pause");
-}
-
-void unmuteUser(const string& username) {
-    auto it = AccountsUser.find(username);
-    if (it != AccountsUser.end()) {
-        it->second.isMuted = false;
-        cout << "User " << username << " has been unmuted.\n";
-    } else {
-        cout << "User not found.\n";
-    }
-    getchar();
-    getchar();
-}

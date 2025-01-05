@@ -13,14 +13,12 @@ bool isUserLoggedIn = false;
 string userLoginAcc;
 const map<string, string> preAcc = {{"wjr", "123"}};
 
-class User {
-public:
-    std::string account;
-    std::string password;
-    bool isMuted;
-};
-
 std::map<std::string, User> accountsUser;
+
+
+
+void (*muteUserPtr)(const std::string&) = muteUser;
+void (*unmuteUserPtr)(const std::string&) = unmuteUser;
 
 void displayUserMenu() {
     userLoginMenu();
@@ -177,6 +175,13 @@ void userChange() {
 void commentMenu() {
     clear_screen();
 
+    if (accountsUser[userLoginAcc].isMuted) {
+        cout << "You have been muted and cannot use comment features.\n";
+        getchar();
+        getchar();
+        return;
+    }
+
     cout << "Station name: ";
     string name;
     cin >> name;
@@ -189,11 +194,6 @@ void commentMenu() {
     Station &station = stations[name];
     clear_screen();
     station.showInfo();
-
-    if (accountsUser[userLoginAcc].isMuted) {
-        cout << "You have been muted and cannot use comment features.\n";
-        return;
-    }
 
     cout << "\n----- Management menu -----\n";
     cout << "1. Add comment\n";
@@ -215,3 +215,26 @@ void commentMenu() {
     }
 }
 
+void muteUser(const std::string& username) {
+    auto it = accountsUser.find(username);
+    if (it != accountsUser.end()) {
+        it->second.isMuted = true;
+        std::cout << "User " << username << " has been muted.\n";
+    } else {
+        std::cout << "User not found.\n";
+    }
+    getchar();
+    getchar();
+}
+
+void unmuteUser(const std::string& username) {
+    auto it = accountsUser.find(username);
+    if (it != accountsUser.end()) {
+        it->second.isMuted = false;
+        std::cout << "User " << username << " has been unmuted.\n";
+    } else {
+        std::cout << "User not found.\n";
+    }
+    getchar();
+    getchar();
+}

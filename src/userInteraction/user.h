@@ -5,7 +5,18 @@
 #ifndef USER_H
 #define USER_H
 
-#include<iostream>
+#include <iostream>
+#include <string>
+#include <map>
+
+class User {
+public:
+    std::string account;
+    std::string password;
+    bool isMuted;
+};
+
+extern std::map<std::string, User> accountsUser;
 
 void displayUserMenu();
 
@@ -18,4 +29,8 @@ void userRegister();
 void userChange();
 
 void commentMenu();
+
+void muteUser(const std::string& username);
+
+void unmuteUser(const std::string& username);
 #endif //USER_H

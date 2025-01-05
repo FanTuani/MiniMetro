@@ -23,4 +23,7 @@ void muteUser(const std::string& username);
 
 void unmuteUser(const std::string& username);
 
+extern void (*muteUserPtr)(const std::string&);
+
+extern void (*unmuteUserPtr)(const std::string&);
 #endif //MINIMETRO_ADMIN_H
