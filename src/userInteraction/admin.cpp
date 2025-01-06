@@ -20,7 +20,7 @@ void displayAdminMenu() {
         return;
     }
     clear_screen();
-    cout << "Admin management\n";
+    cout << "Admin Menu\n";
     cout << "1. Station management\n";
     cout << "2. Comments management\n";
     cout << "3. User management\n";
@@ -266,8 +266,7 @@ void basicManagement() {
     cout << "2. Show existing lines\n";
     cout << "3. Search station info\n";
     cout << "4. Comment manage menu\n";
-    cout << "5. Admin menu\n";
-    cout << "6. Exit\n";
+    cout << "5. Return\n";
     int op;
     cin >> op;
     switch (op) {
@@ -282,9 +281,6 @@ void basicManagement() {
         break;
         case 4:
             commentsManageDelete();
-        break;
-        case 5:
-            displayAdminMenu();
         break;
         default:
             return;
