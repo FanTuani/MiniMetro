@@ -50,7 +50,7 @@ void dfs(const string &now, const string &des, int time = 0) {
         ans.emplace_back(route);
     } else {
         for (const auto &to: stations[now].con) {
-            if (vis.find(to.station.name) != vis.end() and vis[to.station.name]) {
+            if (vis.find(to.station.name) != vis.end() and vis[to.station.name] or !to.station.open) {
                 continue;
             }
             route.emplace_back(to.station.name, to.line);
@@ -149,6 +149,12 @@ void navigate(const string &st, const string &des) {
     dfs(st, des);
 
     cout << '\n';
+    if (!stations[st].open or ans.empty()) {
+        cout << "DESTINATION CANNOT BE ARRIVED\n";
+        getchar();
+        getchar();
+        return;
+    }
     vector<vector<pair<string, int> > > out;
     bool outed[3] = {false, false, false};
     string tag[3] = {"[Fastest travel time] ", "[Fewest transfers] ", "[Fewest stations] "};

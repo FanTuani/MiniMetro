@@ -7,6 +7,7 @@
 #include "../utils.h"
 #include "../core/display.h"
 #include "user.h"
+
 using namespace std;
 
 bool isLoggedIn = false;
@@ -33,8 +34,9 @@ void displayAdminMenu() {
     switch (op) {
         case '1':
             stationManagement();
-        break;
+            break;
         case '2':
+
             commentsManagement();
         break;
         case '3':
@@ -42,18 +44,18 @@ void displayAdminMenu() {
             break;
         case '4':
             basicManagement();
-        break;
+            break;
         case '5':
             clear_screen();
-        if (!isLoggedIn) {
-            cout << "You have not logged in!\n";
-        } else {
-            isLoggedIn = false;
-            cout << "Log out successfully\n";
-        }
-        getchar();
-        logInMenu();
-        break;
+            if (!isLoggedIn) {
+                cout << "You have not logged in!\n";
+            } else {
+                isLoggedIn = false;
+                cout << "Log out successfully\n";
+            }
+            getchar();
+            logInMenu();
+            break;
         default:
             return;
     }
@@ -196,7 +198,7 @@ void commentsManagement() {
     switch (op) {
         case '1':
             clear_screen();
-            displayCommentInteraction(name,1);
+            displayCommentInteraction(name, 1);
             getchar();
             break;
         case '2':
@@ -272,16 +274,17 @@ void basicManagement() {
     switch (op) {
         case 1:
             displayNavigation();
-        break;
+            break;
         case 2:
             showLines();
-        break;
+            break;
         case 3:
             displayStationInfo();
-        break;
+            break;
         case 4:
             commentsManagement();
         break;
+
         default:
             return;
     }
