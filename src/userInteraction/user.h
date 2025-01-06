@@ -8,10 +8,8 @@
 #include <iostream>
 #include <string>
 #include <map>
-#include <set>
 
 using namespace std;
-
 class User {
 public:
     string account;
@@ -33,10 +31,9 @@ void userChange();
 
 void commentMenu();
 
-void muteUser(const string &username);
+void muteUser(const string& username);
 
-void unmuteUser(const string &username);
+void unmuteUser(const string& username);
 
 void adminChangeUser();
-
 #endif //USER_H
