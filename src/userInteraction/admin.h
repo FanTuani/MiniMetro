@@ -13,7 +13,7 @@ void adminRegister();
 
 void stationManagement();
 
-void commentsManageDelete();
+void commentsManagement();
 
 void userManagement();
 

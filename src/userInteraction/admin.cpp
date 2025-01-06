@@ -35,7 +35,7 @@ void displayAdminMenu() {
             stationManagement();
         break;
         case '2':
-            commentsManageDelete();
+            commentsManagement();
         break;
         case '3':
             userManagement();
@@ -170,7 +170,7 @@ void stationManagement() {
     }
 }
 
-void commentsManageDelete() {
+void commentsManagement() {
     clear_screen();
 
     cout << "Station name: ";
@@ -280,7 +280,7 @@ void basicManagement() {
             displayStationInfo();
         break;
         case 4:
-            commentsManageDelete();
+            commentsManagement();
         break;
         default:
             return;
