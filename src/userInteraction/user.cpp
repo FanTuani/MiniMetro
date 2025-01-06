@@ -1,6 +1,5 @@
 #include <iostream>
 #include <map>
-#include <vector>
 #include "user.h"
 #include "../station/station.h"
 #include "../utils.h"
@@ -15,10 +14,13 @@ const map<string, string> preAcc = {{"wjr", "123"}};
 
 std::map<std::string, User> accountsUser;
 
+set<string> mutedUsers;
 
 
-void (*muteUserPtr)(const std::string&) = muteUser;
-void (*unmuteUserPtr)(const std::string&) = unmuteUser;
+void (*muteUserPtr)(const std::string &) = muteUser;
+
+void (*unmuteUserPtr)(const std::string &) = unmuteUser;
+
 void (*adminChangeUserPtr)() =  adminChangeUser;
 
 
@@ -54,18 +56,18 @@ void displayUserMenu() {
             break;
         case '5':
             userChange();
-        break;
+            break;
         case '6':
             clear_screen();
-        if (!isUserLoggedIn) {
-            cout << "You have not logged in!\n";
-        } else {
-            isUserLoggedIn = false;
-            cout << "Log out successfully\n";
-        }
-        getchar();
-        userLoginMenu();
-        break;
+            if (!isUserLoggedIn) {
+                cout << "You have not logged in!\n";
+            } else {
+                isUserLoggedIn = false;
+                cout << "Log out successfully\n";
+            }
+            getchar();
+            userLoginMenu();
+            break;
         default:
             return;
     }
@@ -177,7 +179,7 @@ void userChange() {
 void commentMenu() {
     clear_screen();
 
-    if (accountsUser[userLoginAcc].isMuted) {
+    if (mutedUsers.find(userLoginAcc) != mutedUsers.end()) {
         cout << "You have been muted and cannot use comment features.\n";
         getchar();
         getchar();
@@ -217,11 +219,12 @@ void commentMenu() {
     }
 }
 
-void muteUser(const std::string& username) {
+void muteUser(const std::string &username) {
     clear_screen();
     auto it = accountsUser.find(username);
     if (it != accountsUser.end()) {
         it->second.isMuted = true;
+        mutedUsers.insert(username);
         std::cout << "User " << username << " has been muted.\n";
     } else {
         std::cout << "User not found.\n";
@@ -230,11 +233,13 @@ void muteUser(const std::string& username) {
     getchar();
 }
 
-void unmuteUser(const std::string& username) {
+void unmuteUser(const std::string &username) {
     clear_screen();
     auto it = accountsUser.find(username);
     if (it != accountsUser.end()) {
         it->second.isMuted = false;
+        if (mutedUsers.find(username) != mutedUsers.end())
+            mutedUsers.erase(mutedUsers.find(username));
         std::cout << "User " << username << " has been unmuted.\n";
     } else {
         std::cout << "User not found.\n";
