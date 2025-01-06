@@ -15,6 +15,8 @@ void stationManagement();
 
 void commentsManageDelete();
 
+void userManagement();
+
 void basicManagement();
 
 void changerUserPassword();
@@ -26,4 +28,6 @@ void unmuteUser(const std::string& username);
 extern void (*muteUserPtr)(const std::string&);
 
 extern void (*unmuteUserPtr)(const std::string&);
+
+extern void (*adminChangeUserPtr)();
 #endif //MINIMETRO_ADMIN_H

@@ -8,6 +8,7 @@
 #include <iostream>
 #include <string>
 #include <map>
+
 using namespace std;
 class User {
 public:
@@ -33,4 +34,6 @@ void commentMenu();
 void muteUser(const string& username);
 
 void unmuteUser(const string& username);
+
+void adminChangeUser();
 #endif //USER_H

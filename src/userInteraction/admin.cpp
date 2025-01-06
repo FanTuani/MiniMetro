@@ -23,11 +23,10 @@ void displayAdminMenu() {
     cout << "Admin management\n";
     cout << "1. Station management\n";
     cout << "2. Comments management\n";
-    cout << "3. Mute user\n";
-    cout << "4. Unmute user\n";
-    cout << "5. Basic operate\n";
-    cout << "6. Log out\n";
-    cout << "7. Return\n";
+    cout << "3. User management\n";
+    cout << "4. Basic operate\n";
+    cout << "5. Log out\n";
+    cout << "6. Return\n";
     char op;
     cin >> op;
     getchar();
@@ -38,24 +37,13 @@ void displayAdminMenu() {
         case '2':
             commentsManageDelete();
         break;
-        case '3': {
-            string username;
-            cout << "Enter the username to mute: ";
-            cin >> username;
-            muteUserPtr(username);
+        case '3':
+            userManagement();
             break;
-        }
-        case '4': {
-            string username;
-            cout << "Enter the username to unmute: ";
-            cin >> username;
-            unmuteUserPtr(username);
-            break;
-        }
-        case '5':
+        case '4':
             basicManagement();
         break;
-        case '6':
+        case '5':
             clear_screen();
         if (!isLoggedIn) {
             cout << "You have not logged in!\n";
@@ -232,6 +220,42 @@ void commentsManageDelete() {
             return;
     }
 }
+
+void userManagement() {
+    clear_screen();
+    cout << "----- Management menu -----\n";
+    cout << "1. Mute user\n";
+    cout << "2. Unmute user\n";
+    cout << "3. Change user password\n";
+    cout << "4. return\n";
+    char op;
+    cin >> op;
+    getchar();
+    switch (op) {
+        case '1': {
+            string username;
+            cout << "Enter the username to mute: ";
+            cin >> username;
+            muteUserPtr(username);
+            break;
+        }
+        case '2': {
+            string username;
+            cout << "Enter the username to unmute: ";
+            cin >> username;
+            unmuteUserPtr(username);
+            break;
+        }
+        case '3': {
+            adminChangeUserPtr();
+            break;
+        }
+        default:
+            return;
+    }
+
+}
+
 
 void basicManagement() {
     clear_screen();

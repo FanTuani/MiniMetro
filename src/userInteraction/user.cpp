@@ -19,6 +19,8 @@ std::map<std::string, User> accountsUser;
 
 void (*muteUserPtr)(const std::string&) = muteUser;
 void (*unmuteUserPtr)(const std::string&) = unmuteUser;
+void (*adminChangeUserPtr)() =  adminChangeUser;
+
 
 void displayUserMenu() {
     userLoginMenu();
@@ -236,5 +238,31 @@ void unmuteUser(const std::string& username) {
         std::cout << "User not found.\n";
     }
     getchar();
+    getchar();
+}
+
+void adminChangeUser() {
+    clear_screen();
+    string account, currentPassword, newpassword, rep;
+    cout << "Enter the user account: ";
+    cin >> account;
+    cout << "Enter user new password: ";
+    cin >> newpassword;
+    cout << "Enter user new password again: ";
+    cin >> rep;
+    getchar();
+    if (newpassword != rep) {
+        cout << "PASSWORD CHANGE FAILED, DIFFERENT PASSWORDS ENTERED\n";
+        getchar();
+        return;
+    }
+    // 检查当前密码是否正确
+    if (accountsUser.find(account) != accountsUser.end()) {
+        // 更新密码
+        accountsUser[account].password = newpassword;
+        cout << "Password change successfully\n";
+    } else {
+        cout << "PASSWORD CHANGE FAILED, NO SUCH ACCOUNT\n";
+    }
     getchar();
 }
