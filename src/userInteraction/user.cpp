@@ -218,6 +218,7 @@ void commentMenu() {
 }
 
 void muteUser(const std::string& username) {
+    clear_screen();
     auto it = accountsUser.find(username);
     if (it != accountsUser.end()) {
         it->second.isMuted = true;
@@ -230,6 +231,7 @@ void muteUser(const std::string& username) {
 }
 
 void unmuteUser(const std::string& username) {
+    clear_screen();
     auto it = accountsUser.find(username);
     if (it != accountsUser.end()) {
         it->second.isMuted = false;

@@ -197,6 +197,8 @@ void commentsManageDelete() {
         case '1':
             clear_screen();
             displayCommentInteraction(name,1);
+            getchar();
+            break;
         case '2':
             clear_screen();
             cout << "Select comment to be deleted\n";
